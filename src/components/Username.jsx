@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { changeUsernameAction } from '../action/usernameAction';
 
 export default function Username({store}) {
 
-    const username = store.getState().username;
-    const [newName, setName] = useState(username);
+    const usernameSelector = state => state.username;
+    const dispatch = useDispatch();
+
+    const username = useSelector(usernameSelector);
+    const [newName, setName] = useState();
 
     const inputName = (e) => {
-        // console.log(e.target.value);
         setName(e.target.value)
     }
 
     const clickHandler = () => {
-        store.dispatch(changeUsernameAction(newName));
-        // console.log("tgtgtgtg", newName);
+        console.log(changeUsernameAction(newName));
+        dispatch(changeUsernameAction(newName))
     }
 
     return (

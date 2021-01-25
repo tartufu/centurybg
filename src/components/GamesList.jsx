@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import { increaseGamePlayAction, decreaseGamePlayAction } from '../action/gamesListAction';
 
 export default function GamesList({ store}) {
 
-    const gamesArray = store.getState().games;
-    console.log("arr", gamesArray);
+    const gamesArray = useSelector(state => state.games);
+    const dispatch = useDispatch();
+    // console.log("arr", gamesArray);
 
     const increaseCounter = (index) => {
-        store.dispatch(increaseGamePlayAction(index))
+        dispatch(increaseGamePlayAction(index))
     }
 
     const decreaseCounter = (index) => {
-        store.dispatch(decreaseGamePlayAction(index))
+        dispatch(decreaseGamePlayAction(index))
     }
 
     return(
