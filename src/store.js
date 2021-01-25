@@ -1,16 +1,14 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
+import { userNameReducer } from './reducers/usernameReducer';
 
-const initialState = {  
+export const initialState = {  
     username: 'Tartufu'
 }
 
-const reducer = (state = initialState, action) => {
-    switch(action.type) {
-        case 'username/change':
-            return {...state, username: action.payload}
-        default:
-            return state
-    }
+const reducers = {
+    username: userNameReducer
 }
 
-export const store = createStore(reducer);
+const rootReducer = combineReducers(reducers);
+
+export const store = createStore(rootReducer);
