@@ -3,8 +3,13 @@ import { data } from './data';
 import { userNameReducer } from './reducers/usernameReducer';
 import { challengeRatingReducer} from './reducers/challengeRatingReducer';
 import { gamesListReducer } from './reducers/gamesListReducer';
+import axios from 'axios';
 
-export const initialState = data;
+export const initialState = {
+    username: '',
+    challengeRating: '',
+    games: []
+};
 
 const reducers = {
     username: userNameReducer,

@@ -4,3 +4,10 @@ export const changeUsernameAction = (name) => {
         payload: name
     }   
 }
+
+export const getUsernameGamesAction = (response) => {
+    return {
+        type: 'username/getGames',
+        payload: response
+    }
+}

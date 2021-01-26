@@ -18,6 +18,10 @@ export const gamesListReducer = (state = initialState.games, action) => {
             };
             return [...newDecreaseState ]
 
+        case 'gamesList/getAll':
+            console.log("asdasdasd", action.payload);
+            return action.payload
+
         default:
             return state;
     }

@@ -12,7 +12,15 @@ const decreaseGamePlayAction = (index) => {
     }
 }
 
+const getGamesListAction = (response) => {
+    return {
+        type: 'gamesList/getAll',
+        payload: response
+    }    
+}
+
 export {
     increaseGamePlayAction,
-    decreaseGamePlayAction
+    decreaseGamePlayAction,
+    getGamesListAction
 }
