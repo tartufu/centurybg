@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeUsernameAction, getUsernameGamesAction, resetUsernameAction} from '../action/usernameAction';
+import { getUsernameGamesAction, resetUsernameAction} from '../action/usernameAction';
 import { getGamesListAction } from '../action/gamesListAction';
 import { getChallengeRatingAction } from '../action/challengeRatingAction';
 import axios from 'axios';
@@ -26,11 +26,13 @@ export default function Username() {
         const data = await getUserGames();
         console.log('asdasd', data);
         if (data !== 'user not found!') {
-            dispatch(getUsernameGamesAction(data.username))
-            dispatch(getGamesListAction(data.games))
-            dispatch(getChallengeRatingAction(data.challengeRating))
-            setErrorMsg('')
+            dispatch(getUsernameGamesAction(data.username));
+            dispatch(getGamesListAction(data.games));
+            dispatch(getChallengeRatingAction(data.challengeRating));
+            setErrorMsg('');
+            setName('');
         } else {
+            //resets everything to neutral 
             setErrorMsg(data);
             dispatch(getGamesListAction([]))
             dispatch(getChallengeRatingAction(''))
