@@ -6,6 +6,8 @@ export const userNameReducer = (state = initialState.username, action) => {
             return action.payload
         case 'username/getGames':
             return action.payload
+        case 'username/reset':
+            return action.payload
         default:
             return state;
     }

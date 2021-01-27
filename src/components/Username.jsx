@@ -1,56 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeUsernameAction, getUsernameGamesAction} from '../action/usernameAction';
+import { changeUsernameAction, getUsernameGamesAction, resetUsernameAction} from '../action/usernameAction';
 import { getGamesListAction } from '../action/gamesListAction';
 import { getChallengeRatingAction } from '../action/challengeRatingAction';
 import axios from 'axios';
 
-export default function Username({store}) {
+export default function Username() {
 
     const usernameSelector = state => state.username;
     const dispatch = useDispatch();
 
     const username = useSelector(usernameSelector);
     const [newName, setName] = useState();
-    const [world, setWorld] = useState('');
-    const [userGames, setUserGames] = useState({})
+    const [errorMsg, setErrorMsg] = useState('')
 
     const inputName = (e) => {
         setName(e.target.value)
-    }
-
-    const getHelloWorld = async () => {
-        const response = await axios.get('http://localhost:3000')
-        .then( response => {
-            console.log(response.data);
-            console.log(response);
-            return response.data
-        }, error => {
-            console.log(error)
-        })
-        setWorld(response);
-        // console.log("asdasd", world)
+        console.log(newName);
     }
 
     useEffect(() => {
-        // getHelloWorld()
     }, [])
 
     const clickHandler = async () => {
-        // console.log(changeUsernameAction(newName));
-        // dispatch(changeUsernameAction(newName))
         const data = await getUserGames();
-        console.log(data)
-        dispatch(getUsernameGamesAction(data.username))
-        console.log(data.games);
-        dispatch(getGamesListAction(data.games))
-        dispatch(getChallengeRatingAction(data.challengeRating))
+        console.log('asdasd', data);
+        if (data !== 'user not found!') {
+            dispatch(getUsernameGamesAction(data.username))
+            dispatch(getGamesListAction(data.games))
+            dispatch(getChallengeRatingAction(data.challengeRating))
+            setErrorMsg('')
+        } else {
+            setErrorMsg(data);
+            dispatch(getGamesListAction([]))
+            dispatch(getChallengeRatingAction(''))
+            dispatch(resetUsernameAction())
+            setName('');
+        }
     }
 
     const getUserGames = async () => {
-        const response = await axios.get('http://localhost:3000/users/tartufu')
+
+        const response = await axios.get('http://localhost:3000/users/search/' + newName)
         .then( response => {
-            // console.log(response.data);
+            console.log(response);
             return response.data;
         }, error => {
             console.log(error)
@@ -61,9 +54,9 @@ export default function Username({store}) {
     return (
         <div>
             <h1> {username}</h1>
-            <p> {world} </p>
-            <input onChange={inputName}></input>
-            <button onClick={clickHandler}> change username </button>
+            <p> {errorMsg} </p>
+            <input onChange={inputName} value={newName}></input>
+            <button onClick={clickHandler} > submit username </button>
         </div>
     )
 } 
